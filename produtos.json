@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "nome": "Nike Shox R4",
+        "modelo": "Masculino",
+        "parcelas": 12,
+        "foto": "https://images.lojanike.com.br/500x500/produto/tenis-nike-shox-r4-104265-058-1.jpg",
+        "precos": {
+            "BRL": 749.99,
+            "BRL_promocao": 529.99    
+        }
+    },
+    {
+        "id": 2,
+        "nome": "Converse Chuck 70 Hi",
+        "modelo": "Unissex",
+        "parcelas": 10,
+        "foto": "https://lojavirus.fbitsstatic.net/img/p/tenis-converse-chuck-70-hi-preto-branco-ct09550004-70005/279306-1.jpg?w=1200&h=1200&v=no-change?t=1633209740373",
+        "precos": {
+            "BRL": 379.90
+        }
+    },
+    {
+        "id": 3,
+        "nome": "Adidas Superstar SlipOn",
+        "modelo": "Feminino",
+        "parcelas": 5,
+        "foto": "https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy,c_fill,g_auto/87950009da5e4a8e82a3ac8d010b6fa6_9366/Tenis_Superstar_Slip-On_Bege_FW3569_01_standard.jpg",
+        "precos": {
+            "BRL": 249.99,
+            "BRL_promocao": 199.99    
+        }
+    },
+    {
+        "id": 4,
+        "nome": "Vans Ward Canvas",
+        "modelo": "Feminino",
+        "parcelas": 11,
+        "foto": "https://imgcentauro-a.akamaihd.net/900x900/95738631/tenis-vans-feminino-ward-canvas-img.jpg",
+        "precos": {
+            "BRL": 329.99  
+        }
+    },
+    {
+        "id": 5,
+        "nome": "Fila Classic Court",
+        "modelo": "Masculino",
+        "parcelas": 8,
+        "foto": "https://imgcentauro-a.akamaihd.net/900x900/95931202/tenis-fila-classic-court-masculino-img.jpg",
+        "precos": {
+            "BRL": 249.99 
+        }
+    }
+]

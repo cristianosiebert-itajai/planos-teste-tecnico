@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Exemplo de Preços</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="indigo">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo" style="margin-left: 24px;">Loja de Tênis</a>
+        </div>
+        <div class="progress" style="margin-top: 0;">
+            <div class="indeterminate"></div>
+        </div>
+    </nav>
+
+    <div class="row" style="margin-top: 1rem;">
+        <div class="col s10"></div>
+        <div class="input-field col s2">
+            <select id="moeda_select">
+              <option value="BRL">Real</option>
+              <option value="USD">Dólar</option>
+              <option value="EUR">Euro</option>
+              <option value="INR">Rúpia</option>
+              <option value="JPY">Iene</option>
+              <option value="KRW">Won</option>
+            </select>
+            <label>Moeda</label>
+        </div>
+    </div>
+
+    <div class="row products-area">
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            if (sessionStorage.getItem('moeda') == undefined || sessionStorage.getItem('moeda') == '') {
+                sessionStorage.setItem('moeda','USD');
+            }
+            $('#moeda_select').val(sessionStorage.getItem('moeda'));
+            $('#moeda_select').formSelect();
+            
+            $.ajax({
+                url:'http://localhost:3000/produtos',
+                type: 'get',
+                success: (produtos) => {
+                    for (let i=0; i<produtos.length; i++) {
+                        var card = '<div class="col s3"><div class="card"><div class="card-content">';
+                        card = card + '<div class="card-image"><img src="' + produtos[i].foto + '"></div>';
+                        card = card + '<span class="card-title black-text">' + produtos[i].nome + '</span>';
+
+                        if (produtos[i].precos.hasOwnProperty('BRL_promocao')) {
+                            card = card + '<div class="BRL_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.BRL.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '</s> por ';
+                            card = card + produtos[i].precos.BRL_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.BRL_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="BRL_prices price_flag">';
+                            card = card + produtos[i].precos.BRL.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.BRL/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        if (produtos[i].precos.hasOwnProperty('USD_promocao')) {
+                            card = card + '<div class="USD_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.USD.toLocaleString('pt-BR', { style: 'currency', currency: 'USD' }) + '</s> por ';
+                            card = card + produtos[i].precos.USD_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'USD' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.USD_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'USD' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="USD_prices price_flag">';
+                            card = card + produtos[i].precos.USD.toLocaleString('pt-BR', { style: 'currency', currency: 'USD' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.USD/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'USD' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        if (produtos[i].precos.hasOwnProperty('EUR_promocao')) {
+                            card = card + '<div class="EUR_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.EUR.toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' }) + '</s> por ';
+                            card = card + produtos[i].precos.EUR_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.EUR_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="EUR_prices price_flag">';
+                            card = card + produtos[i].precos.EUR.toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.EUR/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'EUR' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        if (produtos[i].precos.hasOwnProperty('INR_promocao')) {
+                            card = card + '<div class="INR_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.INR.toLocaleString('pt-BR', { style: 'currency', currency: 'INR' }) + '</s> por ';
+                            card = card + produtos[i].precos.INR_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'INR' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.INR_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'INR' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="INR_prices price_flag">';
+                            card = card + produtos[i].precos.INR.toLocaleString('pt-BR', { style: 'currency', currency: 'INR' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.INR/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'INR' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        if (produtos[i].precos.hasOwnProperty('JPY_promocao')) {
+                            card = card + '<div class="JPY_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.JPY.toLocaleString('pt-BR', { style: 'currency', currency: 'JPY' }) + '</s> por ';
+                            card = card + produtos[i].precos.JPY_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'JPY' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.JPY_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'JPY' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="JPY_prices price_flag">';
+                            card = card + produtos[i].precos.JPY.toLocaleString('pt-BR', { style: 'currency', currency: 'JPY' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.JPY/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'JPY' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        if (produtos[i].precos.hasOwnProperty('KRW_promocao')) {
+                            card = card + '<div class="KRW_prices price_flag">';
+                            card = card + 'de <s>' + produtos[i].precos.KRW.toLocaleString('pt-BR', { style: 'currency', currency: 'KRW' }) + '</s> por ';
+                            card = card + produtos[i].precos.KRW_promocao.toLocaleString('pt-BR', { style: 'currency', currency: 'KRW' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.KRW_promocao/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'KRW' })+ ' sem juros.';
+                            card = card + '</div>';
+                        } else {
+                            card = card + '<div class="KRW_prices price_flag">';
+                            card = card + produtos[i].precos.KRW.toLocaleString('pt-BR', { style: 'currency', currency: 'KRW' }) + '<br/>';
+                            card = card + 'ou em ' + produtos[i].parcelas + 'x de ' + (produtos[i].precos.KRW/produtos[i].parcelas).toLocaleString('pt-BR', { style: 'currency', currency: 'KRW' }) + ' sem juros.';
+                            card = card + '</div>';
+                        }
+
+                        card = card + '</div></div>';
+                        $(".products-area").append(card);
+                    }
+
+                    $(".progress").hide();
+                    $('.price_flag').hide();
+                    $('.' + sessionStorage.getItem('moeda') + '_prices').show();
+                    $('#moeda_select').change(() => {
+                        sessionStorage.setItem('moeda',$('#moeda_select').val());
+                        $('.price_flag').hide();
+                        $('.' + sessionStorage.getItem('moeda') + '_prices').show();
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

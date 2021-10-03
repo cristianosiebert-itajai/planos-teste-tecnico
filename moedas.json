@@ -1,0 +1,8 @@
+[
+    {"moeda":"Real Brasileiro", "abv":"BRL"},
+    {"moeda":"Dólar Estados Unidos", "abv":"USD"},
+    {"moeda":"Euro", "abv":"EUR"},
+    {"moeda":"Rúpia Indiana", "abv":"INR"},
+    {"moeda":"Iene Japonês", "abv":"JPY"},
+    {"moeda":"Won Sul-Coreano", "abv":"KRW"}
+]
